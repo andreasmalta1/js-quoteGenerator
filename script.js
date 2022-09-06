@@ -12,10 +12,9 @@ btn.addEventListener('click', () => {
     const keyword = document.querySelector('.keyword').value
     const author = document.querySelector('.author').value
 
-    let my_gradient = ctx.createLinearGradient(0, 0, 170, 0);
-    my_gradient.addColorStop(0, "black");
-    my_gradient.addColorStop(0.5, "red");
-    my_gradient.addColorStop(1, "white");
+    let gradient = ctx.createLinearGradient(0, 0, 170, 100);
+    gradient.addColorStop(0, "rgb(255, 0, 128)");
+    gradient.addColorStop(1, "rgb(255, 153, 51)");
 
     // img.src = "https://source.unsplash.com/random/50×50"
     
@@ -38,7 +37,7 @@ btn.addEventListener('click', () => {
     img.addEventListener("load", ()=>{
         ctx.drawImage(img,0,0);
         ctx.font = '35px serif';
-        ctx.fillStyle = my_gradient;
+        ctx.fillStyle = gradient;
         wrappedText.forEach(function(item) {
             ctx.fillText(item[0], item[1], item[2]); 
         })
@@ -74,7 +73,9 @@ btn.addEventListener('click', () => {
 // Validation to ensure data is given
 // reset after quote generated
 // change place of down btn
-// make sure 1 down button is created 
+// make sure 1 down button is created
+// allow text size options
+// colour options
 
 function getLines(ctx, text, x, y, maxWidth, lineHeight) {
     const words = text.split(" ");
