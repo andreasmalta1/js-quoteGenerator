@@ -24,6 +24,7 @@ body{
     border-radius: 25px;
     width: 200px;
     margin-top: 10px;
+    margin-bottom: 10px;
   }
   
 .btn:hover {
@@ -58,6 +59,21 @@ input{
   margin-bottom: 10px;
 }
 
+select{
+  border: none;
+  outline: none;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  border-radius: 24px;
+  background: #7c7c7c2b;
+  font-family: inherit;
+  font-size: 105%;
+  width: calc(100% - 100px);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 input.quote{
   border: none;
   outline: none;
@@ -73,4 +89,16 @@ input.quote{
 
 canvas{
   margin: 50px;
+}
+
+.hidden{
+  visibility: hidden;
+}
+
+.btn:disabled,
+.btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
 }

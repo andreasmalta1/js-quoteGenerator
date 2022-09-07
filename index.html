@@ -13,22 +13,25 @@
 <body>
     <div class="container">
         <label>Quote</label>
-        <input type="text" class="quote">
+        <input type="text" class="quote" onkeyup="checker()" placeholder="Enter Quote (required)"></textarea>
         <label>Author</label>
-        <input type="text" class="author">
-        <label>Width</label>
-        <input type="text" class="width">
-        <label>Height</label>
-        <input type="text" class="height">
+        <input type="text" class="author" placeholder="Enter Author (Optional)">
+        <label>Image Size</label>
+        <select id="orientation">
+            <option value="portrait">Portrait</option>
+            <option value="landscape">Landscape</option>
+          </select>
         <label>Keyword</label>
-        <input type="text" class="keyword">
+        <input type="text" class="keyword" placeholder="Enter Photo Keyword (Optional)">
         <label>Hex Colour</label>
-        <input type="text" class="hexcolor">
-        <button class="submit btn">Gen Quote</button>
+        <input type="text" class="hexcolor" placeholder="Enter Colour in Hex (Optional)">
+        <button type='submit' class="gen-quote btn" disabled>Gen Quote</button>
     </div>
 
     <canvas id="canvas"></canvas>
     
+    <div id="downloadbtns" class="container hidden"></div>
+
 </body>
     
 </html>
