@@ -1,6 +1,14 @@
 const btn = document.querySelector('.gen-quote')
 let randomNum = 1
-const keyword = 'nature'
+let keyword = 'nature'
+let clientId = ''
+
+fetch("./data.json")
+    .then(response => response.json())
+    .then(data => {
+        clientId = data.client_id
+        console.log(clientId)
+    })
 
 btn.addEventListener('click', () => {
     const canvas = document.getElementById('canvas')
@@ -15,8 +23,6 @@ btn.addEventListener('click', () => {
     const btnDown = document.querySelector('.btn-download')
     const btnDownOriginal = document.querySelector('.btn-download-original')
 
-    // const width = size.split("x")[0]
-    // const height = size.split("x")[1]
 
     if (quote.length == 0){
         return
@@ -40,9 +46,6 @@ btn.addEventListener('click', () => {
         canvas.width = 900
         canvas.height = 600
     }
-    
-    // canvas.width = width
-    // canvas.height = height
 
     let img = new Image()
     img.crossOrigin="anonymous"
@@ -162,7 +165,8 @@ function checker() {
        }
    }
 
-
+// Add button for user
+// button shows name and link to portfolio
 // Change css of list options when expanded
 // Gice credit to user - next to where dowbnload button - first chnage whole layout of display
 // reset after quote generated
@@ -171,6 +175,4 @@ function checker() {
 // change place of down btn
 // Fixing canvas sizing issue in mobile
 // Design by hand how best to visualize
-
-// 1800 / 1200
-// 900 / 600
+// how to store api key when deploying
