@@ -35,40 +35,35 @@ btn.addEventListener('click', () => {
 
     while (downloadEl.lastChild) {
         downloadEl.removeChild(downloadEl.lastChild)
-        }
-
-    let gradient = ctx.createLinearGradient(0, 0, 170, 100);
-    gradient.addColorStop(0, "rgb(255, 0, 128)");
-    gradient.addColorStop(1, "rgb(255, 153, 51)");
-
-    if (orientation == 'portrait'){
-        canvas.width = 600
-        canvas.height = 900
-    } else{
-        canvas.width = 900
-        canvas.height = 600
     }
+
+    let gradient = ctx.createLinearGradient(0, 0, 170, 100)
+    gradient.addColorStop(0, "rgb(255, 0, 128)")
+    gradient.addColorStop(1, "rgb(255, 153, 51)")
+
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
 
     let img = new Image()
     img.crossOrigin="anonymous"
-    
     
     if (keywordValue.length != 0){
         keyword = keywordValue
     }
 
     container.classList.add('hidden')
-    console.log('hello')
 
     const url = `https://api.unsplash.com/photos/random/?orientation=${orientation}&query=${keyword}&client_id=${clientId}`
     
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            img.src = data.urls.regular + `&w=${canvas.width}&h=${canvas.height}dpr=2`
+            img.width = data.width
+            img.height = data.height
+            img.src = data.urls.regular
             imageLink = data.links.html
             imageId = data.id
-            creator = data.user.name //create link to user
+            creator = data.user.name
             creator_link = data.user.portfolio_url
         })
         .catch(error => {
@@ -79,8 +74,14 @@ btn.addEventListener('click', () => {
     
     wrappedText = getLines(ctx, quote, 75, 75, 175, 40)
     
-    img.addEventListener("load", ()=>{
-        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
+    img.addEventListener("load", () => {
+        console.log(canvas.width)
+        console.log(img.width)
+        const hRatio = img.width / canvas.width
+        const vRatio = img.height / canvas.height
+        const ratio  = Math.min (hRatio, vRatio);
+        
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width*ratio, img.height*ratio)
         ctx.font = `${fontSize}px serif`
 
         if (hexColor.length != 0){
@@ -197,9 +198,11 @@ function checker() {
    }
 
 
-   // after quote hide entry
-   // 2 new buttons - edit same image (keep same photo) and start new quote
-   // buttons to download
+// Image size and width
+// after quote hide entry
+// arrange width and height of canvas
+// arrange buttons to download
+// 2 new buttons - edit same image (keep same photo) and start new quote
 // Gice credit to user - next to where dowbnload button - first chnage whole layout of display
 // css
 // change place of down btn
