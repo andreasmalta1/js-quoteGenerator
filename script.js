@@ -76,6 +76,7 @@ btn.addEventListener('click', () => {
     wrappedText = getLines(ctx, quote, 75, 75, 175, 40)
     
     img.addEventListener("load", () => {
+        canvas.style.display = "block";
         ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height)
         ctx.font = `${fontSize}px serif`
 
@@ -128,13 +129,13 @@ btn.addEventListener('click', () => {
 
     btnNavEL.classList.remove('hidden')
 
-    // btnEdit.addEventListener('click', () => {
-    //     const createEl = document.createElement('a')
-    //     createEl.target = '_blank'
-    //     createEl.href = creator_link
-    //     createEl.click()
-    //     createEl.remove()
-    // })
+    btnEdit.addEventListener('click', () => {
+        container.style.display = "flex"
+        // createEl.target = '_blank'
+        // createEl.href = creator_link
+        // createEl.click()
+        // createEl.remove()
+    })
 
 
     btnReset.addEventListener('click', () => {

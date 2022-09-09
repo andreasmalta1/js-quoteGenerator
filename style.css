@@ -120,3 +120,7 @@ canvas{
 #downloadbtns{
   display: none;
 }
+
+.canvas{
+  display: none;
+}
