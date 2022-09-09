@@ -14,12 +14,18 @@ btn.addEventListener('click', () => {
     const canvas = document.getElementById('canvas')
     const ctx = canvas.getContext('2d')
     const container = document.querySelector('.container')
-    const quote = document.querySelector('.quote').value
-    const orientation = document.getElementById('orientation').value
-    const keywordEl = document.querySelector('.keyword').value
-    const author = document.querySelector('.author').value
-    const hexColor = document.querySelector('.hexcolor').value
+    const quoteEl = document.querySelector('.quote')
+    const orientationEl = document.getElementById('orientation')
+    const keywordEl = document.querySelector('.keyword')
+    const authorEl = document.querySelector('.author')
+    const hexColorEl = document.querySelector('.hexcolor')
     const downloadEl = document.getElementById('downloadbtns')
+
+    const quote = quoteEl.value
+    const orientation = orientationEl.value
+    const keywordValue = keywordEl.value
+    const author = authorEl.value
+    const hexColor = hexColorEl.value
     
     if (quote.length == 0){
         return
@@ -45,8 +51,8 @@ btn.addEventListener('click', () => {
     img.crossOrigin="anonymous"
     
     
-    if (keywordEl.length != 0){
-        keyword = keywordEl
+    if (keywordValue.length != 0){
+        keyword = keywordValue
     }
 
     const url = `https://api.unsplash.com/photos/random/?orientation=${orientation}&query=${keyword}&client_id=${clientId}`
@@ -137,6 +143,12 @@ btn.addEventListener('click', () => {
 
     downloadEl.classList.remove('hidden')
 
+    quoteEl.value = ''
+    orientationEl.value = 'Portrait'
+    keywordEl.value = ''
+    authorEl.value = ''
+    hexColorEl.value = ''
+
 })
 
 function getLines(ctx, text, x, y, maxWidth, lineHeight) {
@@ -176,7 +188,6 @@ function checker() {
        }
    }
 
-// Change css of list options when expanded
 // Gice credit to user - next to where dowbnload button - first chnage whole layout of display
 // reset after quote generated
 // allow text size options
