@@ -57,6 +57,9 @@ btn.addEventListener('click', () => {
         keyword = keywordValue
     }
 
+    container.classList.add('hidden')
+    console.log('hello')
+
     const url = `https://api.unsplash.com/photos/random/?orientation=${orientation}&query=${keyword}&client_id=${clientId}`
     
     fetch(url)
@@ -77,7 +80,7 @@ btn.addEventListener('click', () => {
     wrappedText = getLines(ctx, quote, 75, 75, 175, 40)
     
     img.addEventListener("load", ()=>{
-        ctx.drawImage(img,0,0);
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height);
         ctx.font = `${fontSize}px serif`
 
         if (hexColor.length != 0){
@@ -146,8 +149,8 @@ btn.addEventListener('click', () => {
     downloadEl.classList.remove('hidden')
 
     quoteEl.value = ''
-    orientationEl.value = 'Portrait'
-    fontSizeEl.value = '8'
+    orientationEl.value = 'portrait'
+    fontSizeEl.value = '32'
     keywordEl.value = ''
     authorEl.value = ''
     hexColorEl.value = ''
@@ -193,8 +196,11 @@ function checker() {
        }
    }
 
+
+   // after quote hide entry
+   // 2 new buttons - edit same image (keep same photo) and start new quote
+   // buttons to download
 // Gice credit to user - next to where dowbnload button - first chnage whole layout of display
-// allow text size options
 // css
 // change place of down btn
 // Fixing canvas sizing issue in mobile

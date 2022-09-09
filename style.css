@@ -93,7 +93,13 @@ input.quote{
 }
 
 canvas{
-  margin: 50px;
+  margin: 20px;
+  position: absolute;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .hidden{
