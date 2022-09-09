@@ -20,7 +20,10 @@ btn.addEventListener('click', () => {
     const authorEl = document.querySelector('.author')
     const hexColorEl = document.querySelector('.hexcolor')
     const downloadEl = document.getElementById('downloadbtns')
-
+    const btnNavEL = document.querySelector('.nav-btns')
+    const btnEdit = document.getElementById('btn-edit')
+    const btnReset = document.getElementById('btn-reset')
+    
     const quote = quoteEl.value
     const keywordValue = keywordEl.value
     const author = authorEl.value
@@ -49,7 +52,7 @@ btn.addEventListener('click', () => {
         keyword = keywordValue
     }
 
-    container.classList.add('hidden')
+    container.style.display = "none";
 
     const url = `https://api.unsplash.com/photos/random/?orientation=landscape&query=${keyword}&client_id=${clientId}`
     
@@ -123,7 +126,33 @@ btn.addEventListener('click', () => {
         createEl.remove()
     })
 
-    downloadEl.classList.remove('hidden')
+    btnNavEL.classList.remove('hidden')
+
+    // btnEdit.addEventListener('click', () => {
+    //     const createEl = document.createElement('a')
+    //     createEl.target = '_blank'
+    //     createEl.href = creator_link
+    //     createEl.click()
+    //     createEl.remove()
+    // })
+
+
+    btnReset.addEventListener('click', () => {
+        quoteEl.value = ''
+        fontSizeEl.value = '32'
+        keywordEl.value = ''
+        authorEl.value = ''
+        hexColorEl.value = ''
+
+        container.style.display = "flex";
+        canvas.style.display = "none"
+        btnNavEL.style.display = "none"
+        downloadEl.style.display = "none"
+
+        document.querySelector('.gen-quote').disabled = true
+    })
+    
+    downloadEl.style.display = "flex"
 
     const btnArtist = document.createElement('button')
     btnArtist.innerHTML = '<i class="fa fa-download"></i> Go To Artist Portfolio'
@@ -139,15 +168,6 @@ btn.addEventListener('click', () => {
         createEl.remove()
     })
 
-    downloadEl.classList.remove('hidden')
-
-    quoteEl.value = ''
-    fontSizeEl.value = '32'
-    keywordEl.value = ''
-    authorEl.value = ''
-    hexColorEl.value = ''
-
-    document.querySelector('.gen-quote').disabled = true
 
 })
 
@@ -189,7 +209,7 @@ function checker() {
    }
 
 
-// Image size and width
+// Centre canvas
 // after quote hide entry
 // arrange width and height of canvas
 // arrange buttons to download
