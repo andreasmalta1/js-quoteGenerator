@@ -74,6 +74,11 @@ select{
   text-align: center;
 }
 
+select:focus {
+  background: #7c7c7c2b;
+  font-size: 105%;
+}
+
 input.quote{
   border: none;
   outline: none;
