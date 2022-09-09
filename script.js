@@ -15,7 +15,6 @@ btn.addEventListener('click', () => {
     const ctx = canvas.getContext('2d')
     const container = document.querySelector('.container')
     const quoteEl = document.querySelector('.quote')
-    const orientationEl = document.getElementById('orientation')
     const fontSizeEl = document.getElementById('font-size')
     const keywordEl = document.querySelector('.keyword')
     const authorEl = document.querySelector('.author')
@@ -23,7 +22,6 @@ btn.addEventListener('click', () => {
     const downloadEl = document.getElementById('downloadbtns')
 
     const quote = quoteEl.value
-    const orientation = orientationEl.value
     const keywordValue = keywordEl.value
     const author = authorEl.value
     const hexColor = hexColorEl.value
@@ -41,7 +39,7 @@ btn.addEventListener('click', () => {
     gradient.addColorStop(0, "rgb(255, 0, 128)")
     gradient.addColorStop(1, "rgb(255, 153, 51)")
 
-    canvas.width = window.innerWidth
+    canvas.width = window.innerWidth * 0.8
     canvas.height = window.innerHeight
 
     let img = new Image()
@@ -53,13 +51,13 @@ btn.addEventListener('click', () => {
 
     container.classList.add('hidden')
 
-    const url = `https://api.unsplash.com/photos/random/?orientation=${orientation}&query=${keyword}&client_id=${clientId}`
+    const url = `https://api.unsplash.com/photos/random/?orientation=landscape&query=${keyword}&client_id=${clientId}`
     
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            img.width = data.width
-            img.height = data.height
+            img.width = canvas.width
+            img.height = canvas.height
             img.src = data.urls.regular
             imageLink = data.links.html
             imageId = data.id
@@ -75,13 +73,7 @@ btn.addEventListener('click', () => {
     wrappedText = getLines(ctx, quote, 75, 75, 175, 40)
     
     img.addEventListener("load", () => {
-        console.log(canvas.width)
-        console.log(img.width)
-        const hRatio = img.width / canvas.width
-        const vRatio = img.height / canvas.height
-        const ratio  = Math.min (hRatio, vRatio);
-        
-        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width*ratio, img.height*ratio)
+        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height)
         ctx.font = `${fontSize}px serif`
 
         if (hexColor.length != 0){
@@ -150,7 +142,6 @@ btn.addEventListener('click', () => {
     downloadEl.classList.remove('hidden')
 
     quoteEl.value = ''
-    orientationEl.value = 'portrait'
     fontSizeEl.value = '32'
     keywordEl.value = ''
     authorEl.value = ''
