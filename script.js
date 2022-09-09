@@ -20,20 +20,14 @@ btn.addEventListener('click', () => {
     const author = document.querySelector('.author').value
     const hexColor = document.querySelector('.hexcolor').value
     const downloadEl = document.getElementById('downloadbtns')
-    const btnDown = document.querySelector('.btn-download')
-    const btnDownOriginal = document.querySelector('.btn-download-original')
-
-
+    
     if (quote.length == 0){
         return
     }
 
-    if (btnDown != null){
-        btnDown.parentNode.removeChild(btnDown);
-    }
-    if (btnDownOriginal != null){
-        btnDownOriginal.parentNode.removeChild(btnDownOriginal);
-    }
+    while (downloadEl.lastChild) {
+        downloadEl.removeChild(downloadEl.lastChild)
+        }
 
     let gradient = ctx.createLinearGradient(0, 0, 170, 100);
     gradient.addColorStop(0, "rgb(255, 0, 128)");
@@ -126,6 +120,23 @@ btn.addEventListener('click', () => {
     })
 
     downloadEl.classList.remove('hidden')
+
+    const btnArtist = document.createElement('button')
+    btnArtist.innerHTML = '<i class="fa fa-download"></i> Go To Artist Portfolio'
+    btnArtist.classList.add('btn')
+    btnArtist.classList.add('btn-download-original')
+    downloadEl.appendChild(btnArtist)
+
+    btnArtist.addEventListener('click', () => {
+        const createEl = document.createElement('a')
+        createEl.target = '_blank'
+        createEl.href = creator_link
+        createEl.click()
+        createEl.remove()
+    })
+
+    downloadEl.classList.remove('hidden')
+
 })
 
 function getLines(ctx, text, x, y, maxWidth, lineHeight) {
@@ -165,8 +176,6 @@ function checker() {
        }
    }
 
-// Add button for user
-// button shows name and link to portfolio
 // Change css of list options when expanded
 // Gice credit to user - next to where dowbnload button - first chnage whole layout of display
 // reset after quote generated
