@@ -16,6 +16,7 @@ btn.addEventListener('click', () => {
     const container = document.querySelector('.container')
     const quoteEl = document.querySelector('.quote')
     const orientationEl = document.getElementById('orientation')
+    const fontSizeEl = document.getElementById('font-size')
     const keywordEl = document.querySelector('.keyword')
     const authorEl = document.querySelector('.author')
     const hexColorEl = document.querySelector('.hexcolor')
@@ -26,6 +27,7 @@ btn.addEventListener('click', () => {
     const keywordValue = keywordEl.value
     const author = authorEl.value
     const hexColor = hexColorEl.value
+    const fontSize = fontSizeEl.value
     
     if (quote.length == 0){
         return
@@ -76,7 +78,7 @@ btn.addEventListener('click', () => {
     
     img.addEventListener("load", ()=>{
         ctx.drawImage(img,0,0);
-        ctx.font = '35px serif';
+        ctx.font = `${fontSize}px serif`
 
         if (hexColor.length != 0){
             ctx.fillStyle = hexColor 
@@ -145,9 +147,12 @@ btn.addEventListener('click', () => {
 
     quoteEl.value = ''
     orientationEl.value = 'Portrait'
+    fontSizeEl.value = '8'
     keywordEl.value = ''
     authorEl.value = ''
     hexColorEl.value = ''
+
+    document.querySelector('.gen-quote').disabled = true
 
 })
 
@@ -189,7 +194,6 @@ function checker() {
    }
 
 // Gice credit to user - next to where dowbnload button - first chnage whole layout of display
-// reset after quote generated
 // allow text size options
 // css
 // change place of down btn
