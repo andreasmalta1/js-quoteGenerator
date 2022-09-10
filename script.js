@@ -1,13 +1,16 @@
 const btn = document.querySelector('.gen-quote')
-let randomNum = 1
 let keyword = 'nature'
-let clientId = ''
+let clientId
+let url = ''
+let imageLink
+let imageId
+let creator
+let creator_link
 
 fetch("./data.json")
     .then(response => response.json())
     .then(data => {
         clientId = data.client_id
-        console.log(clientId)
     })
 
 btn.addEventListener('click', () => {
@@ -38,62 +41,22 @@ btn.addEventListener('click', () => {
         downloadEl.removeChild(downloadEl.lastChild)
     }
 
-    let gradient = ctx.createLinearGradient(0, 0, 170, 100)
-    gradient.addColorStop(0, "rgb(255, 0, 128)")
-    gradient.addColorStop(1, "rgb(255, 153, 51)")
+    let colourFill
 
-    canvas.width = window.innerWidth * 0.8
-    canvas.height = window.innerHeight
-
-    let img = new Image()
-    img.crossOrigin="anonymous"
-    
-    if (keywordValue.length != 0){
-        keyword = keywordValue
+    if (hexColor.length != 0){
+        colourFill = hexColor 
+    } else {
+        colourFill = ctx.createLinearGradient(0, 0, 170, 100)
+        colourFill.addColorStop(0, "rgb(255, 0, 128)")
+        colourFill.addColorStop(1, "rgb(255, 153, 51)")
     }
 
-    container.style.display = "none";
+    let img = initialClick(canvas, ctx, keywordValue, container)
 
-    const url = `https://api.unsplash.com/photos/random/?orientation=landscape&query=${keyword}&client_id=${clientId}`
-    
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            img.width = canvas.width
-            img.height = canvas.height
-            img.src = data.urls.regular
-            imageLink = data.links.html
-            imageId = data.id
-            creator = data.user.name
-            creator_link = data.user.portfolio_url
-        })
-        .catch(error => {
-            console.log('Error:' + error)
-        })
-
-    randomNum ++
-    
     wrappedText = getLines(ctx, quote, 75, 75, 175, 40)
     
     img.addEventListener("load", () => {
-        canvas.style.display = "block";
-        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height)
-        ctx.font = `${fontSize}px serif`
-
-        if (hexColor.length != 0){
-            ctx.fillStyle = hexColor 
-        } else {
-            ctx.fillStyle = gradient
-        }
-        
-        wrappedText.forEach(function(item) {
-            ctx.fillText(item[0], item[1], item[2]);
-        })
-
-        if (author.length != 0){
-            const lastLine = wrappedText[wrappedText.length - 1][2]
-            ctx.fillText(`- ${author}`, 200, lastLine + 60)
-        }
+        drawImg(img, canvas, ctx, fontSize, colourFill, wrappedText, author)
     })
 
     const btnDownload = document.createElement('button')
@@ -144,6 +107,7 @@ btn.addEventListener('click', () => {
         keywordEl.value = ''
         authorEl.value = ''
         hexColorEl.value = ''
+        url = ''
 
         container.style.display = "flex";
         canvas.style.display = "none"
@@ -168,9 +132,25 @@ btn.addEventListener('click', () => {
         createEl.click()
         createEl.remove()
     })
-
-
 })
+
+
+function drawImg(img, canvas, ctx, fontSize, colourFill, wrappedText, author){
+    canvas.style.display = "block";
+    ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height)
+    ctx.font = `${fontSize}px serif`
+    ctx.fillStyle = colourFill 
+    
+    wrappedText.forEach(function(item) {
+        ctx.fillText(item[0], item[1], item[2]);
+    })
+
+    if (author.length != 0){
+        const lastLine = wrappedText[wrappedText.length - 1][2]
+        ctx.fillText(`- ${author}`, 200, lastLine + 60)
+    }
+}
+
 
 function getLines(ctx, text, x, y, maxWidth, lineHeight) {
     const words = text.split(" ");
@@ -209,7 +189,47 @@ function checker() {
        }
    }
 
+function initialClick(canvas, ctx, keywordValue, container){
+    
+    canvas.width = window.innerWidth * 0.8
+    canvas.height = window.innerHeight
 
+    let img = new Image()
+    img.crossOrigin="anonymous"
+    
+    if (keywordValue.length != 0){
+        keyword = keywordValue
+    }
+
+    container.style.display = "none";
+
+    if (url.length == 0){
+        url = `https://api.unsplash.com/photos/random/?orientation=landscape&query=${keyword}&client_id=${clientId}`
+        getImage(img)
+    }
+    return (img)
+}
+
+function getImage(img){
+    url = `https://api.unsplash.com/photos/random/?orientation=landscape&query=${keyword}&client_id=${clientId}`
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        img.width = canvas.width
+        img.height = canvas.height
+        img.src = data.urls.regular
+        imageLink = data.links.html
+        imageId = data.id
+        creator = data.user.name
+        creator_link = data.user.portfolio_url
+    })
+    .catch(error => {
+        console.log('Error:' + error)
+    })
+}
+
+
+// Move everything to functions
 // Centre canvas
 // after quote hide entry
 // arrange width and height of canvas
